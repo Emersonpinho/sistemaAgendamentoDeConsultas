@@ -1,9 +1,9 @@
 consultas = [ 
-    {'nome': 'Emerson', 'senha': 'Carasuja@3', 'hora': '12:00', 'especialidade': 'odontologia'}
+    {'nome': 'Emerson', 'cpf': '163.659.098-80', 'senha': 'Carasuja@3', 'hora': '12:00', 'especialidade': 'odontologia'}
 ]
 
 menu = ['cadastrar consulta', 'listar', 'Pesquisar por hora', 'cancelar consulta', 'editar']
-dados = ['nome', 'hora', 'especialidade']
+dados = ['nome', 'cpf', 'hora', 'especialidade']
 
 opc = 0
 while opc != -1:
@@ -27,11 +27,13 @@ while opc != -1:
             print()
         else:
             nome = str(input('digite seu nome: '))
+            cpf = str(input('Digite o seu cpf: '))
             senha = str(input('Digite a senha: '))
             especialidade = str(input('\n--Serviços diponiveis--\n- Clínica Geral\n- Pediatria\n- Ginecologia\n- Odontologia\ndigite a especialidade que deseja: ')).lower()
 
             agendamento = {
                 'nome': nome,
+                'CPF': cpf,
                 'senha': senha,
                 'hora': hora,
                 'especialidade': especialidade
@@ -67,8 +69,27 @@ while opc != -1:
                     print('+---+---+')
                     for j in dados:
                         print(f'{j}: {i[j]}')
+                
+                print()
             else:
                 print('Horario não encontrado')
+
+    elif opc == 4:
+        if len(consultas) > 0:
+            esc = input('Deseja realmente cancelar consulta? (s/n): ')
+
+            if esc == 's':
+                user = input('Digite o nome de usuario: ')
+                existe = False
+
+                for i in consultas:
+                    if i['nome'] == user: 
+                        existe = True
+                        break
+                
+        else:
+            print('Nenhuma consulta agendada no nosso sistema!')
+            
 
     elif opc == -1:
         break
