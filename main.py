@@ -80,12 +80,17 @@ while opc != -1:
 
             if esc == 's':
                 user = input('Digite o nome de usuario: ')
+                pos = 0
                 existe = False
 
                 for i in consultas:
                     if i['nome'] == user: 
                         existe = True
+                        pos+=1
                         break
+                
+                if existe == True:
+                    print('Agendamento de consulta ')
                 
         else:
             print('Nenhuma consulta agendada no nosso sistema!')
