@@ -95,8 +95,34 @@ while opc != -1:
 
                 print('\nConsulta cancelada Com SUCESSO!!')
 
+            else:
+                print('Consulta NÂO encontrada')
+
         else:
             print('Nenhuma consulta agendada no nosso sistema!')
+
+    elif opc == 5:
+        if len(consultas) > 0:
+            atualizaCpf = input('Digite o cpf do usuario para atualizar os dados: ')
+            pos = 0
+
+            for i in consultas:
+                if i['cpf'] == atualizaCpf:
+                    existe = True
+                    pos += 1
+                    break
+
+            if existe == True:
+                print('termina essa pedro')
+
+            else:
+                print('CPF NÃo encontrado!')
+
+
+
+
+        else:
+            print('Nenhuma consulta cadastrada no nosso sistema!')
             
 
     elif opc == -1:
