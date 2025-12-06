@@ -1,6 +1,7 @@
 consultas = [ 
     {'nome': 'Emerson', 'cpf': '163.659.098-80', 'senha': 'Carasuja@3', 'hora': '12:00', 'especialidade': 'odontologia'}
 ]
+lixeira = []
 
 menu = ['cadastrar consulta', 'listar', 'Pesquisar por hora', 'cancelar consulta', 'editar']
 dados = ['nome', 'cpf', 'hora', 'especialidade']
@@ -33,7 +34,7 @@ while opc != -1:
 
             agendamento = {
                 'nome': nome,
-                'CPF': cpf,
+                'cpf': cpf,
                 'senha': senha,
                 'hora': hora,
                 'especialidade': especialidade
@@ -76,22 +77,24 @@ while opc != -1:
 
     elif opc == 4:
         if len(consultas) > 0:
-            esc = input('Deseja realmente cancelar consulta? (s/n): ')
+            user = input('Digite o nome de usuario: ')
+            pos = 0
+            existe = False
 
-            if esc == 's':
-                user = input('Digite o nome de usuario: ')
-                pos = 0
-                existe = False
+            for i in consultas:
+                if i['nome'] == user: 
+                    existe = True
+                    pos+=1
+                    break
+                
+            if existe == True:
+                cancelar = input('Agendamento de consulta envontrado com SUCESSO!\n\nDeseja realmente cancelar a consulta? (s/n)')
 
-                for i in consultas:
-                    if i['nome'] == user: 
-                        existe = True
-                        pos+=1
-                        break
-                
-                if existe == True:
-                    print('Agendamento de consulta ')
-                
+                lixo = consultas.pop(pos)
+                lixeira.append(lixo)
+
+                print('\nConsulta cancelada Com SUCESSO!!')
+
         else:
             print('Nenhuma consulta agendada no nosso sistema!')
             
