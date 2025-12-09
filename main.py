@@ -32,7 +32,7 @@ while True:
             if i != ':':
                 novaHora += i
 
-        # Desculpa Geam pela gambiarra foi ideia de Pedro ksksksks
+        # Desculpa pela gambiarra Geam, foi ideia de Pedro ksksksks
         horaInt = int(novaHora)
 
         horas = horaInt // 100
@@ -135,7 +135,7 @@ while True:
                 if i['nome'] == user: 
                     existe = True
                     break
-                pos+=1
+                pos += 1
                 
             if existe == True:
                 userSenha = str(input('Digite a SENHA do seu usuário: '))
@@ -181,20 +181,69 @@ while True:
 
                     novoNome = str(input('Digite o novo NOME: '))
                     novoCpf = str(input('Digite o novo CPF para Atualizar: '))
-                    novoHorario = str(input('Digite o novo HORÁRIO: '))
-
+                    novaHora = str(input('Digite o novo HORÁRIO: '))
                     novaSenha = str(input('Digite a nova SENHA: '))
+                    
+                    podeAgendar = True
+                    if novaHora != '':
+                        # ksksks, verificação confusa porque depois outra variável recebe o ('') que a gente tava impedindo
+                        novaHoraNum = ''
+                        
+                        for i in novaHora:
+                            if i != ':':
+                                novaHoraNum += i
+
+                        # Mesma gambiarra de antes
+                        horaInt = int(novaHoraNum)
+                        horas = horaInt // 100
+                        minu = horaInt % 100
+                        novoTotal = horas * 60 + minu
+
+                        posAtual = 0
+
+                        for i in consultas:
+
+                            if posAtual != pos:
+
+                                if novoTotal >= i['total']:
+                                    dif = novoTotal - i['total']
+                                else:
+                                    dif = i['total'] - novoTotal
+
+                                if dif < 30:
+                                    podeAgendar = False
+
+                            posAtual += 1
+
+                        if podeAgendar == False:
+                            print('\n!Tempo limite excedido (30min cada consulta). Tente outra hora!\n')
+                        else:
+                            consultas[pos]['hora'] = novaHora
+                            consultas[pos]['total'] = novoTotal
 
                     if novoNome != '':
                         consultas[pos]['nome'] = novoNome
                     if novoCpf != '':
-                        consultas[pos]['cpf'] = novoCpf
-                    if novoHorario != '':
-                        consultas[pos]['hora'] = novoHorario
+
+                        existe = False
+
+                        for i in consultas:
+                            if i['cpf'] == novoCpf:
+                                existe = True
+                                break
+                        
+                        if existe == False:
+                            consultas[pos]['cpf'] = novoCpf
+                        else:
+                            print('CPF já existente, como NÃO foi atualizado, permanece o mesmo!')
+
                     if novaSenha != '':
                         consultas[pos]['senha'] = novaSenha
 
-                    print('Dados atualizados com SUCESSO!')
+                    if podeAgendar == False:
+                        print('Alguns dados foram atualizados, confira as mensagens anteriores para saber oque foi e não atualizado')
+                    else:
+                        print('Todos os dados foram atualizados com SUCESSO!')
                                         
                 else:
                     print('Senha INCORRETA. Tente novamente.')
